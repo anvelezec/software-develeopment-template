@@ -10,43 +10,47 @@ env:
 
 jobs:
   build:
-    name: Format and Testing
+    name: Run unit, integration and functional tests
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        python-version: ["3.10"]
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v3
-      with:
-        python-version: ${{ matrix.python-version }}
-    - name: Install and configure Poetry
-      uses: snok/install-poetry@v1
-      with:
-        version: 1.1.10
-        virtualenvs-create: true
-        virtualenvs-in-project: true
-        installer-parallel: true
-    - name: Load cached venv
-      id: cached-poetry-dependencies
-      uses: actions/cache@v2
-      with:
-        path: .venv
-        key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
-    - name: Install library
-      run: poetry install --no-interaction
-    - name: Run isort
-      uses: jamescurtin/isort-action@master
-      with:
-        sortPaths: "./src/ ./tests"
-    - name: Run black on source code
-      uses: psf/black@stable
-      with:
-        options: "--check --verbose"
-        src: "."
-    - name: Run Tests
-      run: |
-        source .venv/bin/activate
-        pytest
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.10'
+
+      - name: Install and configure Poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: 1.1.10
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+          installer-parallel: true
+
+      - name: Load cached venv
+        id: cached-poetry-dependencies
+        uses: actions/cache@v2
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
+
+      - name: Install library
+        run: poetry install --no-interaction
+
+      - name: Run isort
+        uses: jamescurtin/isort-action@master
+        with:
+          sortPaths: "./src/ ./tests"
+
+      - name: Run black on source code
+        uses: psf/black@stable
+        with:
+          options: "--check --verbose"
+          src: "."
+
+      - name: Run Tests
+        run: |
+          source .venv/bin/activate
+          pytest
