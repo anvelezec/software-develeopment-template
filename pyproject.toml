@@ -2,7 +2,7 @@
 name = "src"
 version = "0.1.0"
 description = ""
-authors = ["Andres Velez <anvelezec@unal.edu.co>"]
+authors = ["Andres Velez <andres.velez.e@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
