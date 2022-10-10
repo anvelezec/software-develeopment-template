@@ -1,0 +1,54 @@
+# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: Python package
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  APP_NAME: src
+
+jobs:
+  build:
+    name: Format and Testing
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.8"]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install and configure Poetry
+      uses: snok/install-poetry@v1
+      with:
+        version: 1.1.10
+        virtualenvs-create: true
+        virtualenvs-in-project: true
+        installer-parallel: true
+    - name: Load cached venv
+      id: cached-poetry-dependencies
+      uses: actions/cache@v2
+      with:
+        path: .venv
+        key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
+    - name: Install library
+      run: poetry install --no-interaction
+    - name: Run isort
+      uses: jamescurtin/isort-action@master
+      with:
+        sortPaths: "./src/ ./tests"
+    - name: Run black on source code
+      uses: psf/black@stable
+      with:
+        options: "--check --verbose"
+        src: "."
+    - name: Run Tests
+      run: |
+        source .venv/bin/activate
+        pytest
