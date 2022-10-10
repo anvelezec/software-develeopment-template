@@ -12,14 +12,14 @@ RUN apt-get update \
   && apt-get clean
 
 # TODO: Change version if needed
-RUN pip install "poetry==1.1.13"
+RUN pip install "poetry==1.2.1"
 RUN apt install python3-dev libpq-dev -y
 
 COPY poetry.lock pyproject.toml ./
 
 # Project initialization:
 RUN poetry config virtualenvs.create false \
-  && poetry install $(test "dev" == production && echo "--no-dev") --no-interaction --no-ansi
+  && poetry install --without dev --no-interaction --no-ansi
 
 # Download aws cli
 RUN apt-get update && apt-get install curl unzip -y
