@@ -6,7 +6,7 @@ on:
     branches: [ "main" ]
 
 env:
-  APP_NAME: src
+  PROJECT_NAME: src
 
 jobs:
   build:
@@ -40,7 +40,7 @@ jobs:
         run: poetry install --no-interaction
 
       - name: Run isort
-        uses: jamescurtin/isort-action@master
+        uses: isort/isort-action@master
         with:
           sortPaths: "./src/ ./tests"
 
