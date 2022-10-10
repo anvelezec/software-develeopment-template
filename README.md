@@ -1,1 +1,1 @@
-# software-develeopment-template
+# software-development-template
