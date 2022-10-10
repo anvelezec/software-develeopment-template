@@ -56,14 +56,14 @@ jobs:
           pytest
 
   docker:
-  name: Build and run Docker container
-  runs-on: ubuntu-latest
-  steps:
-    - name: Checkout
-      uses: actions/checkout@v2
+    name: Build and run Docker container
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
 
-    - name: Install make
-      run: apt-get install make
+      - name: Install make
+        run: apt-get install make
 
-    - name: Build Docker image
-      run: make build
+      - name: Build Docker image
+        run: make build
