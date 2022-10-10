@@ -24,7 +24,7 @@ jobs:
       - name: Install and configure Poetry
         uses: snok/install-poetry@v1
         with:
-          version: 1.1.10
+          version: 1.2.1
           virtualenvs-create: true
           virtualenvs-in-project: true
           installer-parallel: true
@@ -49,6 +49,40 @@ jobs:
         with:
           options: "--check --verbose"
           src: "."
+
+      - name: Run Tests
+        run: |
+          source .venv/bin/activate
+          pytest
+  tests:
+    name: Run unit, integration and functional tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.10'
+
+      - name: Install and configure Poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: 1.1.10
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+          installer-parallel: true
+
+      - name: Load cached venv
+        id: cached-poetry-dependencies
+        uses: actions/cache@v2
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
+
+      - name: Install library
+        run: poetry install --no-interaction
 
       - name: Run Tests
         run: |
