@@ -1,2 +1,5 @@
+from src.settings import Settings
+
+
 def test_init():
-    assert True
+    assert isinstance(Settings().PROJECT_NAME, str)
