@@ -1,26 +1,25 @@
-FROM python:3.10-slim
+FROM python:3.8-slim
 
 WORKDIR /usr/src/app
 
-# set environment variables
+# Set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-# install system dependencies
+# Install system dependencies
 RUN apt-get update \
   && apt-get -y install netcat gcc \
-  && apt-get clean
+  && apt-get clean \
+  && apt install python3-dev libpq-dev -y \
+  && apt-get install curl unzip -y \
+  && apt-get install make
 
-# TODO: Change version if needed
-RUN pip install "poetry==1.2.1"
-RUN apt install python3-dev libpq-dev -y
+# Change version if needed
+RUN pip install "poetry==1.2.1" 
 
 COPY poetry.lock pyproject.toml ./
+COPY src ./
 
-# Project initialization:
+# Project initialization
 RUN poetry config virtualenvs.create false \
   && poetry install --without dev --no-interaction --no-ansi
-
-# Download aws cli
-RUN apt-get update && apt-get install curl unzip -y
-RUN apt-get install make
