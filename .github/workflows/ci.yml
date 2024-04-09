@@ -6,7 +6,7 @@ on:
     branches: [ "main" ]
 
 env:
-  PROJECT_NAME: src
+  PROJECT_NAME: ${{ vars.ENV_NAME }}
 
 jobs:
   build:
@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Use env vars
-        run: echo "env variable: ${{ vars.ENV_NAME }}"
+        run: echo "hello ${{ vars.PROJECT_NAME }}"
         
       - name: Checkout
         uses: actions/checkout@v2
