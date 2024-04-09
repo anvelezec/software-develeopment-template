@@ -10,11 +10,11 @@ jobs:
     name: Run unit, integration and functional tests
     runs-on: ubuntu-latest
     env:
-      PROJECT_NAME: ${{ env.ENV_NAME }}
-      ENVIRONMENT: ${{ vars.ENV  }}
+      PROJECT_NAME: ${{ vars.ENV_NAME }}
+      ENVIRONMENT: hello
     steps:
       - name: Use env vars
-        run: echo "hello $PROJECT_NAME, ${{ env.ENV  }},  $GITHUB_ACTION, ${{ vars.GITHUB_ACTION }}"
+        run: echo "hello $PROJECT_NAME, $ENVIRONMENT, ${{ env.ENV  }},  $GITHUB_ACTION, ${{ vars.GITHUB_ACTION }}"
         
       - name: Checkout
         uses: actions/checkout@v2
