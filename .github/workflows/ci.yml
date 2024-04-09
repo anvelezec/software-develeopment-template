@@ -55,15 +55,6 @@ jobs:
           source .venv/bin/activate
           pytest
 
-  docker:
-    name: Build and run Docker container
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Install make
-        run: sudo apt-get install make -y
-
-      - name: Build Docker image
-        run: make build
+  env:
+  - name: 
+    run: "Hello from ${{ vars.ENV_NAME}}"
