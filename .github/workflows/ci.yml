@@ -7,6 +7,7 @@ on:
 
 env:
   PROJECT_NAME: ${{ vars.ENV_NAME }}
+  ENVIRONMENT: ${{ vars.ENV  }}
 
 jobs:
   build:
@@ -14,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Use env vars
-        run: echo "hello $PROJECT_NAME"
+        run: echo "hello $PROJECT_NAME, $ENVIRONMENT"
         
       - name: Checkout
         uses: actions/checkout@v2
