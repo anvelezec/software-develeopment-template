@@ -14,7 +14,7 @@ jobs:
       ENVIRONMENT: ${{ vars.ENV  }}
     steps:
       - name: Use env vars
-        run: echo "hello $PROJECT_NAME, ${{ vars.ENV  }},  $GITHUB_ACTION, ${{ vars.GITHUB_ACTION }}"
+        run: echo ${{"hello $PROJECT_NAME, ${{ vars.ENV  }},  $GITHUB_ACTION, ${{ vars.GITHUB_ACTION }}"}}
         
       - name: Checkout
         uses: actions/checkout@v2
