@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Use env vars
-        run: echo ${{ vars.ENV_NAME}}
+        run: echo "env variable: ${{ vars.ENV_NAME }}"
         
       - name: Checkout
         uses: actions/checkout@v2
