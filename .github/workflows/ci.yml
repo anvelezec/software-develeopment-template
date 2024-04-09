@@ -10,7 +10,7 @@ jobs:
     name: Run unit, integration and functional tests
     runs-on: ubuntu-latest
     env:
-      PROJECT_NAME: ${{ vars.ENV_NAME }}
+      PROJECT_NAME: ${{ env.ENV_NAME }}
       ENVIRONMENT: ${{ vars.ENV  }}
     steps:
       - name: Use env vars
