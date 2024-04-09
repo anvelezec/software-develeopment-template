@@ -4,7 +4,11 @@ on:
   workflow_dispatch:
   pull_request:
     branches: [ "main" ]
-
+    
+env:
+  PROJECT_NAME: ${{ vars.ENV_NAME }}
+  ENVIRONMENT: ${{ vars.ENV }}
+  
 jobs:
   build:
     env:
@@ -14,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Use env vars
-        run: echo "hello ${{ env.PROJECT_NAME }}, ${{ env.ENVIRONMENT }}"
+        run: echo "hello $PROJECT_NAME, $ENVIRONMENT, ${{ env.PROJECT_NAME }}, ${{ env.ENVIRONMENT }},"
         
       - name: Checkout
         uses: actions/checkout@v2
